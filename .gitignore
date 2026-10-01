@@ -1,0 +1,17 @@
+# Downloaded / generated audio data — too large and not meant for git
+data/
+dataset/
+ 
+# Trained model weights
+*.pt
+*.pth
+ 
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+ 
+# OS/editor junk
+.vscode/
+.DS_Store

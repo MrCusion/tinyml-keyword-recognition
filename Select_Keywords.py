@@ -11,6 +11,8 @@ import os
 import shutil
 import random
 
+from tqdm import tqdm
+
 SOURCE_DIR = "./data/SpeechCommands/speech_commands_v0.02"
 DEST_DIR = "dataset"
 
@@ -48,7 +50,7 @@ def choose_keywords():
 def copy_all(src_folder, dst_folder):
     os.makedirs(dst_folder, exist_ok=True)
     files = [f for f in os.listdir(src_folder) if f.endswith(".wav")]
-    for f in files:
+    for f in tqdm(files, desc=f"Copying {os.path.basename(dst_folder)}", unit="file"):
         shutil.copy(os.path.join(src_folder, f), os.path.join(dst_folder, f))
     return len(files)
 
@@ -57,7 +59,7 @@ def copy_sample(src_folder, dst_folder, n, prefix):
     os.makedirs(dst_folder, exist_ok=True)
     files = [f for f in os.listdir(src_folder) if f.endswith(".wav")]
     chosen = random.sample(files, min(n, len(files)))
-    for f in chosen:
+    for f in tqdm(chosen, desc=f"Sampling '{prefix}' -> UNKNOWN", unit="file"):
         # prefix avoids filename collisions across different source words
         new_name = f"{prefix}_{f}"
         shutil.copy(os.path.join(src_folder, f), os.path.join(dst_folder, new_name))
